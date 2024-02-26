@@ -9,9 +9,14 @@ import {
   TileLayer,
 } from "react-leaflet";
 import zag from "../data/zag.json";
+import { LatLngExpression } from "leaflet";
 
-export const Map = () => {
+export const MapView = () => {
+  const center: LatLngExpression | undefined = [
+    30.587233051962436, 31.5202796459198,
+  ];
   const pathRaster = "zag.jpg";
+
   const polygon: any = [
     [30.601313, 31.524711],
     [30.578113, 31.549962],
@@ -23,11 +28,7 @@ export const Map = () => {
   ];
 
   return (
-    <MapContainer
-      center={[30.587233051962436, 31.5202796459198]}
-      zoom={13}
-      scrollWheelZoom={true}
-    >
+    <MapContainer center={center} zoom={13} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -45,8 +46,10 @@ export const Map = () => {
               >
                 <Popup>
                   <div>
-                    <h3>{item.properties.name}</h3>
-                    <p>{item.properties.type}</p>
+                    <h4>Type: {item.properties.type}</h4>
+                    <h4>Name: {item.properties.name}</h4>
+                    <h4>Address: {item.properties.address}</h4>
+                    <h4>number of floor: {item.properties.numper_o_1}</h4>
                     <img
                       src={item.properties.photo.replace("\\", "/")}
                       alt="this point not contain an image"
@@ -60,7 +63,10 @@ export const Map = () => {
           </LayerGroup>
         </LayersControl.Overlay>
         <LayersControl.Overlay name="Industry">
-        <Polygon pathOptions={{ color: 'red', fillColor: 'red' }} positions={polygon} />
+          <Polygon
+            pathOptions={{ color: "red", fillColor: "red" }}
+            positions={polygon}
+          />
         </LayersControl.Overlay>
         <LayersControl.Overlay name="raster">
           <ImageOverlay bounds={polygon} url={pathRaster} />
