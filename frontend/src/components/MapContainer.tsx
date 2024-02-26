@@ -17,7 +17,7 @@ function LocationMarker() {
     },
     locationfound(e: { latlng: LatLngExpression }) {
       setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
+      map.flyTo(e.latlng, map.getMaxZoom());
     },
   });
 
@@ -30,11 +30,11 @@ function LocationMarker() {
   );
 }
 
-const MapContainers: React.FC = () => {
-  const center: LatLngExpression = { lat: 51.505, lng: -0.09 };
+const MapContainers = () => {
+  const center: LatLngExpression = { lat: 0, lng: 0 };
 
   return (
-    <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
+    <MapContainer center={center} zoom={0} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
